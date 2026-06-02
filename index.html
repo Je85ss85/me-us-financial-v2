@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<title>錢錢相印</title>
+<title>錢錢經理人</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
@@ -14,13 +14,15 @@
   --coffee:#7B5E3A;--coffeeLt:#F5EFE6;
   --danger:#D94040;--dangerLt:#FDECEA;
   --blue:#2B5FC2;--blueLt:#EEF3FF;
+  --purple:#7B3FA0;--purpleLt:#F3EAFF;
   --radius:14px;--radiusSm:10px;
+  --p-color:#2D7A4F;   /* 個人：綠 */
+  --j-color:#B8860B;   /* 共同：金 */
 }
 body{font-family:-apple-system,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:72px;font-size:14px;}
 button{font-family:inherit;cursor:pointer;border:none;outline:none;}
 input,select,textarea{font-family:inherit;outline:none;}
 
-/* header */
 .hdr{background:var(--card);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
 .hdr-title{font-size:15px;font-weight:800;color:var(--green);letter-spacing:2px;}
 .hdr-sub{font-size:10px;color:var(--dim);margin-top:2px;}
@@ -28,61 +30,62 @@ input,select,textarea{font-family:inherit;outline:none;}
 .sync-ok{background:var(--greenLt);color:var(--green);}
 .sync-ing{background:var(--goldLt);color:var(--gold);}
 
-/* page content */
 .page{display:none;padding:12px 14px 0;}
 .page.active{display:block;}
 
-/* card */
 .card{background:var(--card);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;border:1px solid var(--border);}
 .card-title{font-size:13px;font-weight:700;margin-bottom:12px;}
 
-/* sub tabs */
 .subtabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px;}
 .subtab{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--mid);font-size:11px;font-weight:400;white-space:nowrap;transition:all .15s;}
 .subtab.active{background:var(--greenLt);color:var(--green);border-color:var(--green);font-weight:700;}
 
-/* progress bar */
 .bar-wrap{background:var(--card2);border-radius:99px;overflow:hidden;}
 .bar-fill{height:100%;border-radius:99px;transition:width .8s ease;}
 
-/* grid */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;}
 .stat-card{background:var(--card);border-radius:12px;padding:10px 10px;border:1px solid var(--border);text-align:center;}
 .stat-label{font-size:9px;color:var(--dim);margin-bottom:3px;}
 .stat-val{font-size:13px;font-weight:700;}
 
-/* input */
 .inp{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);font-size:13px;width:100%;}
 .inp:focus{border-color:var(--green);}
 .form-row{display:grid;gap:8px;margin-bottom:8px;}
 .form-label{font-size:10px;color:var(--dim);margin-bottom:3px;}
 .form-group{display:flex;flex-direction:column;}
 
-/* buttons */
 .btn-primary{background:var(--green);color:#fff;border-radius:var(--radiusSm);padding:10px;font-weight:700;font-size:13px;width:100%;}
-.btn-outline{background:transparent;border:1px solid var(--border);border-radius:20px;padding:6px 16px;color:var(--mid);font-size:12px;font-weight:600;}
 .btn-add{background:var(--green);border-radius:20px;padding:7px 16px;color:#fff;font-size:12px;font-weight:600;}
 .add-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
 .add-bar-label{font-size:12px;font-weight:600;color:var(--mid);}
 
-/* entry row */
-.entry{background:var(--card);border-radius:11px;padding:10px 14px;margin-bottom:6px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+/* Entry rows with color coding */
+.entry{border-radius:11px;padding:10px 14px;margin-bottom:6px;border-left:4px solid transparent;display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--border);}
+.entry.personal{border-left:4px solid var(--p-color);}
+.entry.joint{border-left:4px solid var(--j-color);}
 .entry-desc{font-size:12px;font-weight:600;}
 .entry-meta{font-size:10px;color:var(--dim);margin-top:2px;}
 .entry-amt{font-size:13px;font-weight:700;}
+.entry-p-amt{color:var(--p-color);}
+.entry-j-amt{color:var(--j-color);}
+.entry-cash-amt{color:var(--dim);}
 
-/* bottom nav */
+/* payer badge */
+.payer-badge{font-size:9px;font-weight:700;border-radius:4px;padding:1px 5px;margin-left:4px;}
+.payer-san{background:#E8F5EE;color:var(--green);}
+.payer-ye{background:#FFF8E1;color:var(--gold);}
+.payer-pub{background:var(--card2);color:var(--mid);}
+.payer-cash{background:var(--card2);color:var(--dim);}
+
 .nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;}
 .nav-btn{flex:1;padding:10px 4px 8px;border:none;background:transparent;color:var(--dim);font-size:10px;border-top:2px solid transparent;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:1px;}
 .nav-btn.active{color:var(--green);border-top-color:var(--green);}
 .nav-icon{font-size:17px;}
 
-/* alloc bars */
 .alloc-row{margin-bottom:12px;}
 .alloc-head{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;}
 
-/* month section (collapsible) */
 .month-section{background:var(--card);border-radius:var(--radius);margin-bottom:8px;border:1px solid var(--border);overflow:hidden;}
 .month-header{padding:13px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;}
 .month-header:active{background:var(--card2);}
@@ -93,64 +96,58 @@ input,select,textarea{font-family:inherit;outline:none;}
 .month-body{display:none;padding:0 14px 12px;}
 .month-body.open{display:block;}
 
-/* analysis */
-.analysis-over{background:var(--dangerLt);border-radius:8px;padding:10px 12px;margin-bottom:8px;}
-.analysis-ok{background:var(--greenLt);border-radius:8px;padding:10px 12px;margin-bottom:8px;}
-.analysis-tip{background:var(--blueLt);border-radius:8px;padding:10px 12px;}
-
-/* settle */
 .settle-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:12px;}
-.settle-result{margin:10px 0;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600;}
+.settle-item{background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
 
-/* checkbox */
-.check-row{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mid);margin-bottom:10px;cursor:pointer;}
-input[type=checkbox]{accent-color:var(--green);}
-
-/* invest table */
-.inv-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);}
-.inv-label{font-size:12px;font-weight:600;}
-.inv-sub{font-size:10px;color:var(--dim);margin-top:2px;}
-.inv-val{text-align:right;}
-.inv-mv{font-size:13px;font-weight:700;}
-.inv-pnl{font-size:11px;margin-top:2px;}
-
-/* rebalance */
-.rb-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:11px;}
-
-/* budget hero */
-.budget-hero{border-radius:var(--radius);padding:16px;margin-bottom:10px;border-width:2px;border-style:solid;}
-
-/* empty state */
-.empty{text-align:center;padding:28px 0;color:var(--dim);font-size:12px;}
-
-/* tip */
-.tip{font-size:10px;color:var(--dim);margin-top:6px;}
-
-/* hidden */
+.tip{font-size:10px;color:var(--dim);}
 .hidden{display:none!important;}
-
-/* add form */
 .add-form{background:var(--card);border-radius:var(--radius);padding:14px;margin-bottom:10px;border:1px solid var(--green);}
+
+/* color legend */
+.legend{display:flex;gap:12px;margin-bottom:10px;font-size:10px;color:var(--mid);}
+.legend-dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:4px;}
+
+/* invest triangle */
+.tri-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;}
+.tri-card{border-radius:12px;padding:12px 10px;border:2px solid;text-align:center;}
+.tri-code{font-size:13px;font-weight:800;margin-bottom:2px;}
+.tri-name{font-size:9px;color:var(--mid);margin-bottom:8px;}
+.tri-ratio{font-size:20px;font-weight:900;margin-bottom:4px;}
+.tri-inp{background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.1);border-radius:7px;padding:6px 8px;font-size:12px;font-weight:700;width:100%;text-align:center;}
+
+/* report modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg);border-radius:20px 20px 0 0;padding:20px 16px;width:100%;max-height:80vh;overflow-y:auto;}
+.modal-title{font-size:15px;font-weight:800;margin-bottom:14px;}
+.modal-close{float:right;font-size:20px;color:var(--dim);cursor:pointer;line-height:1;}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="hdr">
   <div>
-    <div class="hdr-title">\ 錢錢相印 /</div>
+    <div class="hdr-title">錢錢經理人</div>
     <div class="hdr-sub" id="hdrSub">載入中...</div>
   </div>
   <span class="sync-badge sync-ok" id="syncBadge">☁ 同步</span>
 </div>
 
-<!-- PAGES -->
 <div id="page-today" class="page active"></div>
 <div id="page-ledger" class="page"></div>
 <div id="page-budget" class="page"></div>
 <div id="page-invest" class="page"></div>
 
-<!-- BOTTOM NAV -->
+<!-- Report Modal -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal">
+    <div class="modal-title">📋 月份報表 <span class="modal-close" onclick="closeReport()">✕</span></div>
+    <div id="reportContent"></div>
+    <button class="btn-primary" style="margin-top:12px" onclick="copyReport()">複製報表</button>
+    <button style="width:100%;margin-top:8px;background:transparent;border:1px solid var(--border);border-radius:var(--radiusSm);padding:10px;font-size:12px;color:var(--mid)" onclick="closeReport()">關閉</button>
+  </div>
+</div>
+
 <nav class="nav">
   <button class="nav-btn active" onclick="switchTab('today',this)"><span class="nav-icon">🏠</span>今日</button>
   <button class="nav-btn" onclick="switchTab('ledger',this)"><span class="nav-icon">📒</span>帳務</button>
@@ -159,9 +156,8 @@ input[type=checkbox]{accent-color:var(--green);}
 </nav>
 
 <script>
-// ── Storage (uses window.storage if available, else localStorage) ──
+// ── Storage ──────────────────────────────────────────────────
 const useCloud = typeof window.storage !== 'undefined';
-
 async function dbGet(k){
   if(useCloud){try{const r=await window.storage.get(k,true);return r?JSON.parse(r.value):null;}catch{return null;}}
   else{try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
@@ -171,51 +167,30 @@ async function dbSet(k,v){
   else{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 }
 
-// ── State ──
-let personal=[],joint=[],invest={bullet:0,shares006208:0,shares00631:0,price006208:'',price00631:'',cost006208:'',cost00631:''};
-let todaySubTab='全部',ledgerSubTab='流水';
+// ── Constants ─────────────────────────────────────────────────
+const PERSONAL_BUDGET = 8000;
+const JOINT_BUDGET = 8000;
+const CATS = ['🍱 餐飲','🚗 交通','🏥 醫療','🏠 家用孝親','🛍️ 購物','🎉 娛樂','✈️ 出遊','🎁 禮物','📚 學習成長','🙏 其他'];
+const CAT_COLORS = ['#2D7A4F','#B8860B','#D94040','#7B5E3A','#2B5FC2','#8B6BAE','#1A8080','#CC7722','#5B8DB8','#888'];
+const P_LIMITS = {'🍱 餐飲':2500,'🚗 交通':1500,'🎉 娛樂':1500,'✈️ 出遊':2000,'🛍️ 購物':1000,'🏠 家用孝親':1000,'🎁 禮物':500,'📚 學習成長':1000};
+const J_LIMITS = {'🍱 餐飲':3500,'🚗 交通':2000,'🎉 娛樂':1500,'✈️ 出遊':3000,'🛍️ 購物':500,'📚 學習成長':1000,'🙏 其他':500};
+const ALLOC = [
+  {k:'life',l:'日常生活',p:40,a:8000,c:'var(--green)',e:'🛒'},
+  {k:'emergency',l:'緊急備用',p:5,a:1000,c:'var(--coffee)',e:'🛡️'},
+  {k:'travel',l:'旅遊資產桶',p:20,a:4000,c:'var(--gold)',e:'✈️'},
+  {k:'invest',l:'核心投資桶',p:35,a:7000,c:'var(--blue)',e:'📈'},
+];
+// Payer options for joint entries
+const PAYERS = ['三墊','葉墊','公費'];
 
-// ── Constants ──
-const PERSONAL_BUDGET=8000,JOINT_BUDGET=8000;
-const CATS=['🍱 餐飲','🚗 交通','🏥 醫療','🏠 家用孝親','🛍️ 購物','🎉 娛樂','🎁 禮物','📚 學習成長','🙏 其他'];
-const CAT_COLORS=['#2D7A4F','#B8860B','#D94040','#7B5E3A','#2B5FC2','#8B6BAE','#CC7722','#5B8DB8','#888'];
-const P_LIMITS={'🍱 餐飲':2500,'🚗 交通':1500,'🎉 娛樂':1500,'🛍️ 購物':1000,'🏠 家用孝親':1000,'🎁 禮物':500,'📚 學習成長':1000};
-const J_LIMITS={'🍱 餐飲':3500,'🚗 交通':2000,'🎉 娛樂':1500,'🛍️ 購物':500,'📚 學習成長':1000,'🙏 其他':500};
-const ALLOC=[{k:'life',l:'日常生活',p:40,a:8000,c:'var(--green)',e:'🛒'},{k:'emergency',l:'緊急備用',p:5,a:1000,c:'var(--coffee)',e:'🛡️'},{k:'travel',l:'旅遊資產桶',p:20,a:4000,c:'var(--gold)',e:'✈️'},{k:'invest',l:'核心投資桶',p:35,a:7000,c:'var(--blue)',e:'📈'}];
+// ── State ─────────────────────────────────────────────────────
+let personal=[], joint=[], invest={mv631:0,mv662:0,mv865:0,cash:0};
+let todayTab='全部', ledgerTab='流水';
 
-// ── Helpers ──
-const fmt=n=>'NT$'+Math.round(n).toLocaleString();
-const todayStr=()=>new Date().toISOString().slice(0,10);
-const ymNow=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;};
-const ymLabel=ym=>{const[y,m]=ym.split('-');return `${y}年${parseInt(m)}月`;};
-function catColor(cat){const i=CATS.indexOf(cat);return i>=0?CAT_COLORS[i]:'#888';}
-function catShort(cat){return cat.replace(/^[^ ]+ /,'');}
-
-// ── Budget period (resets on 15th) ──
-function getPeriodStart(){
-  const now=new Date(),today=todayStr();
-  const ym=ymNow();
-  const this15=`${ym}-15`;
-  const prev=new Date(now.getFullYear(),now.getMonth()-1,1);
-  const prev15=`${prev.getFullYear()}-${String(prev.getMonth()+1).padStart(2,'0')}-15`;
-  return today>=this15?this15:prev15;
-}
-
-function getSpentInPeriod(){
-  const ps=getPeriodStart();
-  return personal.filter(e=>e.date>=ps&&!e.cash).reduce((s,e)=>s+e.amt,0);
-}
-
-// ── All months with data ──
-function getAllMonths(){
-  const s=new Set([...personal.map(e=>e.date.slice(0,7)),...joint.map(e=>e.date.slice(0,7))]);
-  return [...s].sort().reverse();
-}
-
-// ── Seed data ──
-const SEED_P=[
+// ── Seed data ─────────────────────────────────────────────────
+const SEED_P = [
   {id:1,date:'2026-04-27',desc:'早餐飯糰',amt:65,cat:'🍱 餐飲',cash:false},
-  {id:2,date:'2026-04-25',desc:'雞排+大埔鐵板燒+彩碗',amt:355,cat:'🍱 餐飲',cash:false},
+  {id:2,date:'2026-04-25',desc:'雞排+鐵板燒+彩碗',amt:355,cat:'🍱 餐飲',cash:false},
   {id:3,date:'2026-04-25',desc:'3支酒🍷',amt:2000,cat:'🎉 娛樂',cash:false},
   {id:4,date:'2026-04-25',desc:'洗車+咖啡飲料',amt:350,cat:'🚗 交通',cash:false},
   {id:5,date:'2026-04-17',desc:'家裡買菜錢',amt:3000,cat:'🏠 家用孝親',cash:false},
@@ -224,12 +199,12 @@ const SEED_P=[
   {id:8,date:'2026-04-14',desc:'飲料+按摩',amt:705,cat:'🎉 娛樂',cash:false},
   {id:9,date:'2026-04-14',desc:'北鼻十二段',amt:1177,cat:'🎉 娛樂',cash:false},
   {id:10,date:'2026-04-14',desc:'泰滾吃飯',amt:1125,cat:'🍱 餐飲',cash:false},
-  {id:11,date:'2026-04-10',desc:'買書+電信費',amt:1176,cat:'🛍️ 購物',cash:false},
-  {id:12,date:'2026-04-12',desc:'南投住宿',amt:2000,cat:'🎉 娛樂',cash:false},
-  {id:13,date:'2026-04-07',desc:'超速罰鍰😡',amt:4613,cat:'💸 罰單意外',cash:false},
+  {id:11,date:'2026-04-10',desc:'買書+電信費',amt:1176,cat:'📚 學習成長',cash:false},
+  {id:12,date:'2026-04-12',desc:'南投住宿',amt:2000,cat:'✈️ 出遊',cash:false},
+  {id:13,date:'2026-04-07',desc:'超速罰鍰😡',amt:4613,cat:'🙏 其他',cash:false},
   {id:14,date:'2026-04-06',desc:'麵阿央+冰淇淋',amt:930,cat:'🍱 餐飲',cash:false},
   {id:15,date:'2026-03-31',desc:'豆腐村+麵包+蛋黃酥',amt:1688,cat:'🍱 餐飲',cash:false},
-  {id:16,date:'2026-03-30',desc:'牌照稅',amt:7120,cat:'💸 罰單意外',cash:false},
+  {id:16,date:'2026-03-30',desc:'牌照稅',amt:7120,cat:'🙏 其他',cash:false},
   {id:17,date:'2026-03-30',desc:'Cloud訂閱+買菜+火鍋',amt:1027,cat:'🛍️ 購物',cash:false},
   {id:18,date:'2026-03-20',desc:'罰單+便秘藥',amt:750,cat:'🙏 其他',cash:false},
   {id:19,date:'2026-03-20',desc:'🐢土地公金龜',amt:23000,cat:'🙏 其他',cash:false},
@@ -257,19 +232,47 @@ const SEED_P=[
   {id:41,date:'2026-01-07',desc:'蝦皮泡腳桶',amt:666,cat:'🛍️ 購物',cash:false},
   {id:42,date:'2026-01-06',desc:'淘寶+燭台+跨年',amt:3200,cat:'🛍️ 購物',cash:false},
 ];
-const SEED_J=[
-  {id:101,date:'2026-04-26',desc:'咖啡展麵包',amt:205,cat:'🍱 餐飲',paid:'三'},
-  {id:102,date:'2026-04-26',desc:'停車',amt:150,cat:'🚗 交通',paid:'三'},
-  {id:103,date:'2026-04-25',desc:'王塔米糕',amt:80,cat:'🍱 餐飲',paid:'共同'},
-  {id:104,date:'2026-04-25',desc:'高鐵費',amt:540,cat:'🚗 交通',paid:'葉'},
-  {id:105,date:'2026-04-25',desc:'逢甲餡餅+停車',amt:150,cat:'🍱 餐飲',paid:'共同'},
-  {id:106,date:'2026-04-25',desc:'韓式料理',amt:440,cat:'🍱 餐飲',paid:'共同'},
+const SEED_J = [
+  {id:101,date:'2026-04-26',desc:'咖啡展麵包',amt:205,cat:'🍱 餐飲',payer:'三墊'},
+  {id:102,date:'2026-04-26',desc:'停車',amt:150,cat:'🚗 交通',payer:'三墊'},
+  {id:103,date:'2026-04-25',desc:'王塔米糕',amt:80,cat:'🍱 餐飲',payer:'公費'},
+  {id:104,date:'2026-04-25',desc:'高鐵費',amt:540,cat:'🚗 交通',payer:'葉墊'},
+  {id:105,date:'2026-04-25',desc:'逢甲餡餅+停車',amt:150,cat:'🍱 餐飲',payer:'公費'},
+  {id:106,date:'2026-04-25',desc:'韓式料理',amt:440,cat:'🍱 餐飲',payer:'公費'},
 ];
 
-// ── Save ──
+// ── Helpers ───────────────────────────────────────────────────
+const fmt = n => 'NT$'+Math.round(n).toLocaleString();
+const todayStr = () => new Date().toISOString().slice(0,10);
+const ymNow = () => {const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;};
+const ymLabel = ym => {const[y,m]=ym.split('-');return `${y}年${parseInt(m)}月`;};
+const monthName = ym => {const[,m]=ym.split('-');return `${parseInt(m)}月`;};
+const days=['日','一','二','三','四','五','六'];
+
+function updateHdrDate(){
+  const n=new Date();
+  document.getElementById('hdrSub').textContent=`${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 星期${days[n.getDay()]} · 小花花 & 小貝貝`;
+}
+
+// ── Budget period: 1st of month ───────────────────────────────
+function getPeriodStart(){
+  const n=new Date();
+  return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-01`;
+}
+function getSpentInPeriod(){
+  const ps=getPeriodStart();
+  return personal.filter(e=>e.date>=ps&&!e.cash).reduce((s,e)=>s+e.amt,0);
+}
+
+function getAllMonths(){
+  const s=new Set([...personal.map(e=>e.date.slice(0,7)),...joint.map(e=>e.date.slice(0,7))]);
+  return [...s].sort().reverse();
+}
+
+// ── Save/Load ─────────────────────────────────────────────────
 async function saveAll(){
   setBadge(true);
-  await Promise.all([dbSet('qqi:p',personal),dbSet('qqi:j',joint),dbSet('qqi:inv',invest)]);
+  await Promise.all([dbSet('qqm:p',personal),dbSet('qqm:j',joint),dbSet('qqm:inv',invest)]);
   setBadge(false);
 }
 function setBadge(loading){
@@ -278,23 +281,78 @@ function setBadge(loading){
   b.className='sync-badge '+(loading?'sync-ing':'sync-ok');
 }
 
-// ── Init ──
 async function init(){
-  const[p,j,inv]=await Promise.all([dbGet('qqi:p'),dbGet('qqi:j'),dbGet('qqi:inv')]);
-  personal=p||SEED_P; joint=j||SEED_J; if(inv)invest=inv;
+  setBadge(true);
+  // 讀新版 key
+  let[p,j,inv]=await Promise.all([dbGet('qqm:p'),dbGet('qqm:j'),dbGet('qqm:inv')]);
+
+  // 如果新版沒資料，嘗試從所有舊版 key 搬移
+  if(!p){
+    const oldKeys=['lv2:p','lv1:p','fv4:p','qqs3:exp','qqs:expenses'];
+    for(const k of oldKeys){
+      const old=await dbGet(k);
+      if(old&&old.length>0){
+        // 統一欄位格式
+        p=old.map(e=>({
+          id:e.id||Date.now()+Math.random(),
+          date:e.date||todayStr(),
+          desc:e.desc||e.description||'',
+          amt:e.amt||e.amount||0,
+          cat:e.cat||e.category||'🙏 其他',
+          cash:e.cash||false
+        }));
+        console.log('個人資料從',k,'搬移',p.length,'筆');
+        break;
+      }
+    }
+  }
+  if(!j){
+    const oldKeys=['lv2:j','lv1:j','fv4:j','qqs3:joint','qqs:joint'];
+    for(const k of oldKeys){
+      const old=await dbGet(k);
+      if(old&&old.length>0){
+        // 統一欄位：舊版用 paid 欄位，新版用 payer
+        j=old.map(e=>{
+          let payer='公費';
+          if(e.payer)payer=e.payer;
+          else if(e.paid==='三'||e.paid==='三墊')payer='三墊';
+          else if(e.paid==='葉'||e.paid==='葉墊')payer='葉墊';
+          return {
+            id:e.id||Date.now()+Math.random(),
+            date:e.date||todayStr(),
+            desc:e.desc||e.description||'',
+            amt:e.amt||e.amount||0,
+            cat:e.cat||e.category||'🙏 其他',
+            payer
+          };
+        });
+        console.log('共同資料從',k,'搬移',j.length,'筆');
+        break;
+      }
+    }
+  }
+  if(!inv){
+    const oldKeys=['lv2:inv','lv1:inv','fv4:inv','qqs3:invest'];
+    for(const k of oldKeys){
+      const old=await dbGet(k);
+      if(old){inv=old;break;}
+    }
+  }
+
+  personal=p||SEED_P;
+  joint=j||SEED_J;
+  if(inv)invest={...invest,...inv};
+
+  // 搬移完存到新 key
+  await Promise.all([dbSet('qqm:p',personal),dbSet('qqm:j',joint),dbSet('qqm:inv',invest)]);
+
+  setBadge(false);
   updateHdrDate();
-  setInterval(updateHdrDate, 60000);
+  setInterval(updateHdrDate,60000);
   renderAll();
 }
 
-function renderAll(){
-  renderToday();
-  renderLedger();
-  renderBudget();
-  renderInvest();
-}
-
-// ── Tab switch ──
+// ── Tab switch ────────────────────────────────────────────────
 function switchTab(id,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -302,243 +360,249 @@ function switchTab(id,btn){
   btn.classList.add('active');
 }
 
-// ── Add expense ──
-let addFormWho='個人';
-function openAddForm(who,containerId){
-  addFormWho=who;
-  const existing=document.getElementById('addFormContainer');
-  if(existing)existing.remove();
-  const container=document.getElementById(containerId);
-  if(!container)return;
-  const cats=CATS.map(c=>`<option value="${c}">${c}</option>`).join('');
-  const todayVal=todayStr();
-  const html=`<div id="addFormContainer" class="add-form">
-    <div class="form-row" style="grid-template-columns:1fr 1fr">
-      <div class="form-group"><div class="form-label">日期</div><input class="inp" type="date" id="fDate" value="${todayVal}"/></div>
-      <div class="form-group"><div class="form-label">類別</div><select class="inp" id="fCat">${cats}</select></div>
-    </div>
-    <div class="form-group" style="margin-bottom:8px"><div class="form-label">花在哪？</div><input class="inp" type="text" id="fDesc" placeholder="輸入說明..." autocomplete="off"/></div>
-    <div class="form-row" style="grid-template-columns:1fr 1fr ${who==='共同'?'1fr':''}">
-      <div class="form-group"><div class="form-label">金額</div><input class="inp" type="number" id="fAmt" placeholder="0" inputmode="numeric"/></div>
-      <div class="form-group"><div class="form-label">類型</div><select class="inp" id="fWho" onchange="togglePaid()"><option value="個人"${who==='個人'?' selected':''}>個人</option><option value="共同"${who==='共同'?' selected':''}>共同</option></select></div>
-      <div class="form-group" id="fPaidGroup" style="display:${who==='共同'?'flex':'none'};flex-direction:column"><div class="form-label">墊付</div><select class="inp" id="fPaid"><option>三</option><option>葉</option><option>共同</option></select></div>
-    </div>
-    <label class="check-row" style="margin-top:8px"><input type="checkbox" id="fCash"/> 💵 僅領現金（不計入支出）</label>
-    <button class="btn-primary" onclick="submitAdd()">確認新增</button>
-    <button style="width:100%;margin-top:8px;background:transparent;border:1px solid var(--border);border-radius:var(--radiusSm);padding:9px;color:var(--mid);font-size:12px;" onclick="closeAddForm()">取消</button>
-  </div>`;
-  container.insertAdjacentHTML('afterbegin',html);
-  setTimeout(()=>document.getElementById('fDesc')&&document.getElementById('fDesc').focus(),100);
-}
+function renderAll(){renderToday();renderLedger();renderBudget();renderInvest();}
 
-function togglePaid(){
-  const who=document.getElementById('fWho')&&document.getElementById('fWho').value;
-  const pg=document.getElementById('fPaidGroup');
-  if(pg)pg.style.display=who==='共同'?'flex':'none';
-}
-
-function closeAddForm(){
-  const f=document.getElementById('addFormContainer');
-  if(f)f.remove();
-}
-
-function submitAdd(){
-  const desc=document.getElementById('fDesc')&&document.getElementById('fDesc').value.trim();
-  const amt=document.getElementById('fAmt')&&parseFloat(document.getElementById('fAmt').value);
-  const date=document.getElementById('fDate')&&document.getElementById('fDate').value;
-  const cat=document.getElementById('fCat')&&document.getElementById('fCat').value;
-  const who=document.getElementById('fWho')&&document.getElementById('fWho').value;
-  const paid=document.getElementById('fPaid')&&document.getElementById('fPaid').value;
-  const cash=document.getElementById('fCash')&&document.getElementById('fCash').checked;
-  if(!desc){alert('請輸入說明');return;}
-  if(!amt||amt<=0){alert('請輸入金額');return;}
-  const id=Date.now();
-  if(who==='個人'){personal=[{id,date,desc,amt,cat,cash},...personal];}
-  else{joint=[{id,date,desc,amt,cat,paid:paid||'共同'},...joint];}
-  closeAddForm();
-  saveAll();
-  renderAll();
-}
-
-// ── Render helpers ──
+// ── HTML helpers ──────────────────────────────────────────────
 function barHTML(pct,color,h=8){
   return `<div class="bar-wrap" style="height:${h}px"><div class="bar-fill" style="width:${Math.min(Math.max(pct,0),100)}%;background:${color};height:${h}px"></div></div>`;
 }
 
-function entryHTML(e,src,allowDelete=false){
-  const col=src==='j'?'var(--gold)':e.cash?'var(--dim)':'var(--green)';
-  const cashTag=e.cash?` <span style="font-size:9px;background:var(--card2);color:var(--dim);border-radius:4px;padding:1px 5px">現金</span>`:'';
-  const amtTxt=e.cash?`💵 ${fmt(e.amt)}`:`-${fmt(e.amt)}`;
-  const meta=`${e.date.slice(5)} · ${e.cat}${src==='j'&&e.paid?` · ${e.paid}墊`:''}`;
-  const delBtn=allowDelete?`<button onclick="deleteEntry(${e.id},'${src}')" style="background:none;border:none;color:var(--dim);font-size:16px;padding:4px 6px;cursor:pointer;line-height:1;flex-shrink:0" title="刪除">✕</button>`:'';
-  return `<div class="entry" style="align-items:center">
+function payerBadge(payer){
+  if(!payer)return'';
+  const cls=payer==='三墊'?'payer-san':payer==='葉墊'?'payer-ye':payer==='公費'?'payer-pub':'payer-cash';
+  return `<span class="payer-badge ${cls}">${payer}</span>`;
+}
+
+function entryHTML(e, src, allowDelete=false){
+  const isP = src==='p';
+  const isCash = e.cash;
+  const cls = isP?'entry personal':'entry joint';
+  const amtCls = isCash?'entry-amt entry-cash-amt':isP?'entry-amt entry-p-amt':'entry-amt entry-j-amt';
+  const amtTxt = isCash?`💵 ${fmt(e.amt)}`:`-${fmt(e.amt)}`;
+  const cashTag = isCash?`<span style="font-size:9px;background:var(--card2);color:var(--dim);border-radius:4px;padding:1px 5px;margin-left:4px">現金</span>`:'';
+  const meta = `${e.date.slice(5)} · ${e.cat}${!isP?` · ${payerBadge(e.payer)}`:''}`;
+  const delBtn = allowDelete?`<button onclick="deleteEntry(${e.id},'${src}')" style="background:none;border:none;color:var(--dim);font-size:16px;padding:4px 6px;cursor:pointer;flex-shrink:0">✕</button>`:'';
+  return `<div class="${cls}">
     <div style="flex:1;min-width:0">
       <div class="entry-desc">${e.desc}${cashTag}</div>
-      <div class="entry-meta">${meta}</div>
+      <div class="entry-meta">${e.date.slice(5)} · ${e.cat}${!isP?` · ${payerBadge(e.payer)}`:''}</div>
     </div>
-    <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-      <div class="entry-amt" style="color:${col}">${amtTxt}</div>
+    <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+      <div class="${amtCls}">${amtTxt}</div>
       ${delBtn}
     </div>
   </div>`;
 }
 
+function emptyHTML(msg){return `<div style="text-align:center;padding:28px 0;color:var(--dim);font-size:12px">${msg||'尚無記錄'}</div>`;}
+
 function deleteEntry(id,src){
-  if(!confirm('確認刪除這筆記錄？'))return;
-  if(src==='p'||src==='personal'){personal=personal.filter(e=>e.id!==id);}
-  else{joint=joint.filter(e=>e.id!==id);}
+  if(!confirm('確認刪除？'))return;
+  if(src==='p')personal=personal.filter(e=>e.id!==id);
+  else joint=joint.filter(e=>e.id!==id);
   saveAll();renderAll();
 }
 
-function emptyHTML(msg){return `<div class="empty">${msg||'尚無記錄'}</div>`;}
-
-// ── Monthly analysis ──
-function analyzeMonth(entries,limits,budget){
-  const total=entries.reduce((s,e)=>s+e.amt,0);
-  const bycat={};
-  CATS.forEach(c=>{bycat[c]=entries.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0);});
-  const over=Object.entries(limits).map(([cat,lim])=>({cat,spent:bycat[cat]||0,lim,diff:(bycat[cat]||0)-lim})).filter(x=>x.diff>0).sort((a,b)=>b.diff-a.diff);
-  return {total,bycat,over,budget};
-}
-
-function catBarsHTML(bycat,maxVal,title,titleColor){
-  const entries=Object.entries(bycat).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  if(!entries.length)return '';
-  const max=maxVal||Math.max(...entries.map(([,v])=>v))||1;
-  let h=`<div style="font-size:11px;font-weight:600;color:${titleColor||'var(--mid)'};margin-bottom:8px">${title}</div>`;
-  entries.forEach(([cat,val])=>{
-    const pct=val/max*100;
-    const col=catColor(cat);
-    h+=`<div style="margin-bottom:7px">
-      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
-        <span style="color:var(--text)">${catShort(cat)}</span>
-        <span style="font-weight:600;color:var(--mid)">${fmt(val)}</span>
+// ── Add form ──────────────────────────────────────────────────
+function openAddForm(defaultType, containerId){
+  const existing=document.getElementById('addFormContainer');
+  if(existing){existing.remove();return;}
+  const container=document.getElementById(containerId);
+  if(!container)return;
+  const cats=CATS.map(c=>`<option value="${c}">${c}</option>`).join('');
+  const payerOpts=PAYERS.map(p=>`<option value="${p}">${p}</option>`).join('');
+  const html=`<div id="addFormContainer" class="add-form">
+    <div class="form-row" style="grid-template-columns:1fr 1fr">
+      <div class="form-group"><div class="form-label">日期</div><input class="inp" type="date" id="fDate" value="${todayStr()}"/></div>
+      <div class="form-group"><div class="form-label">類別</div><select class="inp" id="fCat">${cats}</select></div>
+    </div>
+    <div class="form-group" style="margin-bottom:8px"><div class="form-label">花在哪？</div>
+      <input class="inp" type="text" id="fDesc" placeholder="輸入說明..." autocomplete="off" autocorrect="off"/>
+    </div>
+    <div class="form-row" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="form-group"><div class="form-label">金額</div><input class="inp" type="number" id="fAmt" placeholder="0" inputmode="numeric"/></div>
+      <div class="form-group"><div class="form-label">類型</div>
+        <select class="inp" id="fType" onchange="togglePayerField()">
+          <option value="個人"${defaultType==='個人'?' selected':''}>個人</option>
+          <option value="共同"${defaultType==='共同'?' selected':''}>共同</option>
+        </select>
       </div>
-      ${barHTML(pct,col,6)}
-    </div>`;
-  });
-  return h;
+      <div class="form-group" id="fPayerGroup" style="${defaultType==='共同'?'':'display:none'}">
+        <div class="form-label">墊付方</div>
+        <select class="inp" id="fPayer">${payerOpts}</select>
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mid);margin-bottom:10px;cursor:pointer">
+      <input type="checkbox" id="fCash" style="accent-color:var(--green)"/> 💵 僅領現金（不計入支出）
+    </label>
+    <button class="btn-primary" onclick="submitAdd()">確認新增</button>
+    <button style="width:100%;margin-top:8px;background:transparent;border:1px solid var(--border);border-radius:var(--radiusSm);padding:9px;color:var(--mid);font-size:12px" onclick="closeAddForm()">取消</button>
+  </div>`;
+  container.insertAdjacentHTML('afterbegin',html);
+  setTimeout(()=>{const d=document.getElementById('fDesc');if(d)d.focus();},150);
 }
 
-// ── RENDER TODAY ──
+function togglePayerField(){
+  const t=document.getElementById('fType')&&document.getElementById('fType').value;
+  const pg=document.getElementById('fPayerGroup');
+  if(pg)pg.style.display=t==='共同'?'flex':'none';
+  if(pg)pg.style.flexDirection='column';
+}
+
+function closeAddForm(){const f=document.getElementById('addFormContainer');if(f)f.remove();}
+
+function submitAdd(){
+  const desc=(document.getElementById('fDesc')||{}).value?.trim();
+  const amt=parseFloat((document.getElementById('fAmt')||{}).value);
+  const date=(document.getElementById('fDate')||{}).value;
+  const cat=(document.getElementById('fCat')||{}).value;
+  const type=(document.getElementById('fType')||{}).value;
+  const payer=(document.getElementById('fPayer')||{}).value||'公費';
+  const cash=(document.getElementById('fCash')||{}).checked||false;
+  if(!desc){alert('請輸入說明');return;}
+  if(!amt||amt<=0){alert('請輸入金額');return;}
+  const id=Date.now();
+  if(type==='個人'){personal=[{id,date,desc,amt,cat,cash},...personal];}
+  else{joint=[{id,date,desc,amt,cat,payer,cash:false},...joint];}
+  closeAddForm();
+  saveAll();renderAll();
+}
+
+// ── Monthly settle: group by month, show who paid ─────────────
+function getSettleByMonth(){
+  const months=getAllMonths();
+  return months.map(m=>{
+    const entries=joint.filter(e=>e.date.startsWith(m));
+    const sanAmt=entries.filter(e=>e.payer==='三墊').reduce((s,e)=>s+e.amt,0);
+    const yeAmt=entries.filter(e=>e.payer==='葉墊').reduce((s,e)=>s+e.amt,0);
+    const pubAmt=entries.filter(e=>e.payer==='公費').reduce((s,e)=>s+e.amt,0);
+    const total=entries.reduce((s,e)=>s+e.amt,0);
+    return {m,entries,sanAmt,yeAmt,pubAmt,total};
+  }).filter(x=>x.entries.length>0);
+}
+
+// ── RENDER TODAY ──────────────────────────────────────────────
 function renderToday(){
   const el=document.getElementById('page-today');
   const today=todayStr();
   const ym=ymNow();
+  const now=new Date();
+
+  // Budget: 1st to end of month
   const spent=getSpentInPeriod();
   const rem=Math.max(0,PERSONAL_BUDGET-spent);
   const pct=Math.round(spent/PERSONAL_BUDGET*100);
-  const budgetColor=pct>80?'var(--danger)':'var(--green)';
-  const todayP=personal.filter(e=>e.date===today&&!e.cash);
+  const bColor=pct>80?'var(--danger)':'var(--green)';
+
+  const todayP=personal.filter(e=>e.date===today);
   const todayJ=joint.filter(e=>e.date===today);
-  const todayPAmt=todayP.reduce((s,e)=>s+e.amt,0);
+  const todayPAmt=todayP.filter(e=>!e.cash).reduce((s,e)=>s+e.amt,0);
   const todayJAmt=todayJ.reduce((s,e)=>s+e.amt,0);
   const monthP=personal.filter(e=>e.date.startsWith(ym)&&!e.cash).reduce((s,e)=>s+e.amt,0);
   const monthJ=joint.filter(e=>e.date.startsWith(ym)).reduce((s,e)=>s+e.amt,0);
-  const sanPaid=joint.filter(e=>e.paid==='三').reduce((s,e)=>s+e.amt,0);
-  const yePaid=joint.filter(e=>e.paid==='葉').reduce((s,e)=>s+e.amt,0);
-  const diff=sanPaid-yePaid;
-  const jMonthPct=Math.round(monthJ/JOINT_BUDGET*100);
+
+  // Settle quick view for current month
+  const curSettle=joint.filter(e=>e.date.startsWith(ym));
+  const curSan=curSettle.filter(e=>e.payer==='三墊').reduce((s,e)=>s+e.amt,0);
+  const curYe=curSettle.filter(e=>e.payer==='葉墊').reduce((s,e)=>s+e.amt,0);
+  const jPct=Math.round(monthJ/JOINT_BUDGET*100);
   const jColor=monthJ>JOINT_BUDGET?'var(--danger)':'var(--gold)';
 
   const tabs=['全部','個人','共同'];
-  const subTabsHTML=`<div class="subtabs">${tabs.map(t=>`<button class="subtab${todaySubTab===t?' active':''}" onclick="setTodayTab('${t}')">${t}</button>`).join('')}</div>`;
+  const subHtml=`<div class="subtabs">${tabs.map(t=>`<button class="subtab${todayTab===t?' active':''}" onclick="setTodayTab('${t}')">${t}</button>`).join('')}</div>`;
 
-  // 全部
-  const todayAll=[...todayP.map(e=>({...e,src:'p'})),...todayJ.map(e=>({...e,src:'j'}))].sort((a,b)=>b.id-a.id);
-  const allHTML=`
-    <div class="budget-hero" style="background:var(--card);border-color:${budgetColor}">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-        <div><div style="font-size:10px;color:var(--mid);margin-bottom:2px">💰 個人可用餘額</div>
-          <div style="font-size:30px;font-weight:800;color:${budgetColor}">${fmt(rem)}</div>
-          <div class="tip">已用 ${fmt(spent)} / ${fmt(PERSONAL_BUDGET)} · 15號重置</div>
-        </div>
-        <div style="font-size:22px;font-weight:800;color:${budgetColor}">${pct}%</div>
+  // Legend
+  const legendHtml=`<div class="legend">
+    <span><span class="legend-dot" style="background:var(--p-color)"></span>個人</span>
+    <span><span class="legend-dot" style="background:var(--j-color)"></span>共同</span>
+  </div>`;
+
+  // Budget hero
+  const budgetHtml=`<div class="card" style="border:2px solid ${bColor};margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+      <div>
+        <div style="font-size:10px;color:var(--mid);margin-bottom:2px">💰 個人可用餘額</div>
+        <div style="font-size:30px;font-weight:800;color:${bColor}">${fmt(rem)}</div>
+        <div class="tip">已用 ${fmt(spent)} / ${fmt(PERSONAL_BUDGET)} · 每月1號重置</div>
       </div>
-      ${barHTML(pct,budgetColor,7)}
+      <div style="font-size:22px;font-weight:800;color:${bColor}">${pct}%</div>
     </div>
-    <div class="g3">
-      <div class="stat-card"><div class="stat-label">今日個人</div><div class="stat-val" style="color:var(--green)">${fmt(todayPAmt)}</div></div>
-      <div class="stat-card"><div class="stat-label">今日共同</div><div class="stat-val" style="color:var(--gold)">${fmt(todayJAmt)}</div></div>
-      <div class="stat-card"><div class="stat-label">本月共同</div><div class="stat-val" style="color:var(--coffee)">${fmt(monthJ)}</div></div>
-    </div>
-    <div class="add-bar"><div class="add-bar-label">今日記錄</div><button class="btn-add" onclick="openAddForm('個人','addFormAll')">＋ 新增</button></div>
-    <div id="addFormAll"></div>
-    ${todayAll.map(e=>entryHTML(e,e.src,true)).join('')||emptyHTML('今日尚無記錄')}`;
+    ${barHTML(pct,bColor,7)}
+  </div>`;
 
-  // 個人
-  const pHTML=`
-    <div class="budget-hero" style="background:var(--card);border-color:${budgetColor}">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <div><div style="font-size:10px;color:var(--mid);margin-bottom:2px">💰 個人可用餘額</div>
-          <div style="font-size:28px;font-weight:800;color:${budgetColor}">${fmt(rem)}</div>
-        </div>
-        <div style="font-size:20px;font-weight:800;color:${budgetColor}">${pct}%</div>
-      </div>
-      ${barHTML(pct,budgetColor,7)}
-      <div class="tip" style="margin-top:6px">已用 ${fmt(spent)} / ${fmt(PERSONAL_BUDGET)} · 15號重置</div>
-    </div>
-    <div class="g2">
-      <div class="stat-card"><div class="stat-label">今日個人</div><div class="stat-val" style="color:var(--green)">${fmt(todayPAmt)}</div></div>
-      <div class="stat-card"><div class="stat-label">本月個人</div><div class="stat-val" style="color:var(--green)">${fmt(monthP)}</div></div>
-    </div>
-    <div class="add-bar"><div class="add-bar-label">今日個人記錄</div><button class="btn-add" onclick="openAddForm('個人','addFormP')">＋ 新增</button></div>
-    <div id="addFormP"></div>
-    ${[...personal.filter(e=>e.date===today)].sort((a,b)=>b.id-a.id).map(e=>entryHTML(e,'p',true)).join('')||emptyHTML('今日個人尚無記錄')}`;
+  // Stats
+  const statsHtml=`<div class="g3">
+    <div class="stat-card"><div class="stat-label">今日個人</div><div class="stat-val" style="color:var(--p-color)">${fmt(todayPAmt)}</div></div>
+    <div class="stat-card"><div class="stat-label">今日共同</div><div class="stat-val" style="color:var(--j-color)">${fmt(todayJAmt)}</div></div>
+    <div class="stat-card"><div class="stat-label">本月共同</div><div class="stat-val" style="color:var(--coffee)">${fmt(monthJ)}</div></div>
+  </div>`;
 
-  // 共同
-  const settleMsg=diff>0?`→ 葉 應匯三 ${fmt(Math.abs(diff)/2)}`:diff<0?`→ 三 應匯葉 ${fmt(Math.abs(diff)/2)}`:'✓ 目前平帳';
-  const settleColor=diff!==0?'var(--danger)':'var(--green)';
-  const settleBg=diff!==0?'var(--dangerLt)':'var(--greenLt)';
-  const jMonthEntries=joint.filter(e=>e.date.startsWith(ym)).sort((a,b)=>b.date.localeCompare(a.date));
-  const jHTML=`
-    <div class="g2">
-      <div class="stat-card" style="background:var(--goldLt)"><div class="stat-label">今日共同</div><div class="stat-val" style="color:var(--gold)">${fmt(todayJAmt)}</div></div>
-      <div class="stat-card" style="background:var(--goldLt)"><div class="stat-label">當月累積</div><div class="stat-val" style="color:var(--gold)">${fmt(monthJ)}</div></div>
+  // Joint budget card
+  const jBudgetHtml=`<div class="card" style="margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px">
+      <span style="color:var(--mid)">共同預算 ${monthName(ym)}（${fmt(JOINT_BUDGET)}）</span>
+      <span style="font-weight:700;color:${jColor}">${jPct}%</span>
     </div>
-    <div class="card" style="margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px">
-        <span style="color:var(--mid)">共同預算進度</span>
-        <span style="font-weight:700;color:${jColor}">${jMonthPct}%</span>
-      </div>
-      ${barHTML(jMonthPct,jColor,8)}
-      <div class="tip" style="margin-top:6px">${monthJ>JOINT_BUDGET?`超出 ${fmt(monthJ-JOINT_BUDGET)}`:`剩餘 ${fmt(JOINT_BUDGET-monthJ)}`} / 月預算 ${fmt(JOINT_BUDGET)}</div>
-    </div>
-    <div class="card" style="margin-bottom:10px">
-      <div style="font-size:12px;font-weight:600;color:var(--mid);margin-bottom:8px">⚖️ 本月墊付</div>
-      <div class="settle-row"><span style="color:var(--mid)">三 已墊</span><span style="font-weight:600;color:var(--green)">${fmt(sanPaid)}</span></div>
-      <div class="settle-row" style="margin-bottom:8px"><span style="color:var(--mid)">葉 已墊</span><span style="font-weight:600;color:var(--gold)">${fmt(yePaid)}</span></div>
-      <div style="padding:8px 12px;background:${settleBg};border-radius:8px;font-size:12px;font-weight:600;color:${settleColor}">${settleMsg}</div>
-    </div>
-    <div class="add-bar"><div class="add-bar-label">今日共同記錄</div><button class="btn-add" onclick="openAddForm('共同','addFormJ')">＋ 新增</button></div>
-    <div id="addFormJ"></div>
-    ${todayJ.sort((a,b)=>b.id-a.id).map(e=>entryHTML(e,'j',true)).join('')||emptyHTML('今日共同尚無記錄')}
-    <div style="font-size:12px;font-weight:600;color:var(--mid);margin:12px 0 8px">當月所有共同記錄</div>
-    ${jMonthEntries.map(e=>entryHTML(e,'j',true)).join('')||emptyHTML('本月共同尚無記錄')}`;
+    ${barHTML(jPct,jColor,8)}
+    <div class="tip" style="margin-top:6px">${monthJ>JOINT_BUDGET?`超出 ${fmt(monthJ-JOINT_BUDGET)}`:`剩餘 ${fmt(JOINT_BUDGET-monthJ)}`}</div>
+  </div>`;
 
-  const contentMap={'全部':allHTML,'個人':pHTML,'共同':jHTML};
-  el.innerHTML=subTabsHTML+`<div id="todayContent">${contentMap[todaySubTab]}</div>`;
+  // Settle mini for current month
+  const settleMiniHtml=curSan>0||curYe>0?`<div class="card" style="margin-bottom:10px">
+    <div style="font-size:11px;font-weight:700;color:var(--mid);margin-bottom:8px">⚖️ ${monthName(ym)} 墊付待結</div>
+    ${curSan>0?`<div class="settle-row"><span style="color:var(--mid)">三墊 待公費匯回</span><span style="font-weight:700;color:var(--p-color)">${fmt(curSan)}</span></div>`:''}
+    ${curYe>0?`<div class="settle-row" style="border-bottom:none"><span style="color:var(--mid)">葉墊 待公費匯回</span><span style="font-weight:700;color:var(--j-color)">${fmt(curYe)}</span></div>`:''}
+  </div>`:'';
+
+  // Add bar
+  const addBarHtml=`<div class="add-bar">
+    <div class="add-bar-label">${todayTab==='全部'?'今日記錄':todayTab==='個人'?'今日個人':' 今日共同'}</div>
+    <button class="btn-add" onclick="openAddForm('${todayTab==='共同'?'共同':'個人'}','addFormTodayContainer')">＋ 新增</button>
+  </div>
+  <div id="addFormTodayContainer"></div>`;
+
+  // Today entries
+  let entriesHtml='';
+  if(todayTab==='全部'){
+    const all=[...todayP.map(e=>({...e,src:'p'})),...todayJ.map(e=>({...e,src:'j'}))].sort((a,b)=>b.id-a.id);
+    entriesHtml=all.length?all.map(e=>entryHTML(e,e.src,true)).join(''):emptyHTML('今日尚無記錄');
+  } else if(todayTab==='個人'){
+    entriesHtml=todayP.length?[...todayP].sort((a,b)=>b.id-a.id).map(e=>entryHTML(e,'p',true)).join(''):emptyHTML('今日個人尚無記錄');
+  } else {
+    const jMonthAll=joint.filter(e=>e.date.startsWith(ym)).sort((a,b)=>b.date.localeCompare(a.date));
+    entriesHtml=`${todayJ.length?[...todayJ].sort((a,b)=>b.id-a.id).map(e=>entryHTML(e,'j',true)).join(''):emptyHTML('今日共同尚無記錄')}
+    <div style="font-size:11px;font-weight:600;color:var(--mid);margin:12px 0 6px">${monthName(ym)} 所有共同記錄</div>
+    ${jMonthAll.map(e=>entryHTML(e,'j',true)).join('')||emptyHTML('本月共同尚無記錄')}`;
+  }
+
+  el.innerHTML=subHtml+(todayTab==='共同'?jBudgetHtml+settleMiniHtml:budgetHtml+statsHtml)+(todayTab!=='共同'?statsHtml+jBudgetHtml+settleMiniHtml:'')+addBarHtml+legendHtml+entriesHtml;
+  // clean up duplicate stats
+  el.innerHTML=subHtml+budgetHtml+statsHtml+(todayTab==='共同'?jBudgetHtml+settleMiniHtml:'')+addBarHtml+legendHtml+entriesHtml;
 }
 
-function setTodayTab(t){todaySubTab=t;renderToday();}
+function setTodayTab(t){todayTab=t;renderToday();}
 
-// ── RENDER LEDGER ──
+// ── RENDER LEDGER ─────────────────────────────────────────────
 function renderLedger(){
   const el=document.getElementById('page-ledger');
   const months=getAllMonths();
   const ym=ymNow();
   const monthP=personal.filter(e=>e.date.startsWith(ym)&&!e.cash).reduce((s,e)=>s+e.amt,0);
   const monthJ=joint.filter(e=>e.date.startsWith(ym)).reduce((s,e)=>s+e.amt,0);
-  const sanPaid=joint.filter(e=>e.paid==='三').reduce((s,e)=>s+e.amt,0);
-  const yePaid=joint.filter(e=>e.paid==='葉').reduce((s,e)=>s+e.amt,0);
-  const diff=sanPaid-yePaid;
+  const settleData=getSettleByMonth();
 
-  const tabs=['流水','圖表','待結清'];
-  const subTabsHTML=`<div class="subtabs">${tabs.map(t=>`<button class="subtab${ledgerSubTab===t?' active':''}" onclick="setLedgerTab('${t}')">${t}</button>`).join('')}</div>`;
+  const tabs=['流水','圖表','墊付'];
+  const subHtml=`<div class="subtabs">${tabs.map(t=>`<button class="subtab${ledgerTab===t?' active':''}" onclick="setLedgerTab('${t}')">${t}</button>`).join('')}</div>`;
 
-  // 流水 - grouped by month, collapsible
-  let flowHTML='';
-  if(months.length===0){flowHTML=emptyHTML('尚無記錄');}
+  // Legend
+  const legendHtml=`<div class="legend">
+    <span><span class="legend-dot" style="background:var(--p-color)"></span>個人</span>
+    <span><span class="legend-dot" style="background:var(--j-color)"></span>共同</span>
+  </div>`;
+
+  // 流水: grouped by month
+  let flowHtml='';
+  if(months.length===0){flowHtml=emptyHTML('尚無記錄');}
   else{
     months.forEach(m=>{
       const pE=personal.filter(e=>e.date.startsWith(m)).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
@@ -546,200 +610,226 @@ function renderLedger(){
       const pTotal=pE.filter(e=>!e.cash).reduce((s,e)=>s+e.amt,0);
       const jTotal=jE.reduce((s,e)=>s+e.amt,0);
       const isOpen=m===ym;
-      const entries=[...pE.map(e=>({...e,src:'p'})),...jE.map(e=>({...e,src:'j'}))].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
-      flowHTML+=`<div class="month-section">
-        <div class="month-header" onclick="toggleMonth('m${m.replace('-','')}')">
+      const all=[...pE.map(e=>({...e,src:'p'})),...jE.map(e=>({...e,src:'j'}))].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+      const mid=m.replace('-','');
+      flowHtml+=`<div class="month-section">
+        <div class="month-header" onclick="toggleMonth('m${mid}')">
           <div>
             <div class="month-title">${ymLabel(m)}</div>
-            <div class="month-summary">個人 ${fmt(pTotal)} · 共同 ${fmt(jTotal)}</div>
+            <div class="month-summary" style="display:flex;gap:10px">
+              <span style="color:var(--p-color)">個人 ${fmt(pTotal)}</span>
+              <span style="color:var(--j-color)">共同 ${fmt(jTotal)}</span>
+            </div>
           </div>
-          <span class="month-chevron${isOpen?' open':''}" id="chev-m${m.replace('-','')}">▼</span>
+          <span class="month-chevron${isOpen?' open':''}" id="chev-m${mid}">▼</span>
         </div>
-        <div class="month-body${isOpen?' open':''}" id="m${m.replace('-','')}">
-          ${entries.map(e=>entryHTML(e,e.src,true)).join('')||emptyHTML('本月尚無記錄')}
+        <div class="month-body${isOpen?' open':''}" id="m${mid}">
+          ${all.map(e=>entryHTML(e,e.src,true)).join('')||emptyHTML('本月尚無記錄')}
         </div>
       </div>`;
     });
   }
 
   // 圖表
-  let chartHTML='';
-  months.forEach(m=>{
-    const pE=personal.filter(e=>e.date.startsWith(m)&&!e.cash);
-    const jE=joint.filter(e=>e.date.startsWith(m));
-    const pA=analyzeMonth(pE,P_LIMITS,PERSONAL_BUDGET);
-    const jA=analyzeMonth(jE,J_LIMITS,JOINT_BUDGET);
-    const pMax=Math.max(...CATS.map(c=>pA.bycat[c]||0),1);
-    const jMax=Math.max(...CATS.map(c=>jA.bycat[c]||0),1);
-    const isCur=m===ym;
-    let overHTML='';
-    const allOver=[...pA.over.map(x=>({...x,type:'個人'})),...jA.over.map(x=>({...x,type:'共同'}))].slice(0,3);
-    if(allOver.length>0){
-      overHTML=`<div class="analysis-over" style="margin-bottom:8px">
-        <div style="font-size:11px;font-weight:700;color:var(--danger);margin-bottom:5px">⚠️ 超支項目</div>
-        ${allOver.map(x=>`<div style="font-size:11px;color:var(--danger);margin-bottom:2px">${x.type} ${catShort(x.cat)}：超出 ${fmt(x.diff)}</div>`).join('')}
-      </div>`;}
-    let tipHTML='';
-    const topP=pA.over[0],topJ=jA.over[0];
-    const tipLines=[];
-    if(topP)tipLines.push(`個人「${catShort(topP.cat)}」控制在 ${fmt(topP.lim)} 以內`);
-    else if(pA.total>0)tipLines.push('個人支出控制良好 ✓');
-    if(topJ)tipLines.push(`共同「${catShort(topJ.cat)}」注意控制`);
-    else if(jA.total>0)tipLines.push('共同支出控制良好 ✓');
-    if(tipLines.length>0){tipHTML=`<div class="analysis-tip"><div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:4px">💡 下月建議</div>${tipLines.map(t=>`<div style="font-size:11px;color:var(--blue);margin-bottom:2px">${t}</div>`).join('')}</div>`;}
-    chartHTML+=`<div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div class="card-title" style="margin-bottom:0">${ymLabel(m)}</div>
-        ${isCur?`<span style="font-size:10px;background:var(--greenLt);color:var(--green);border-radius:20px;padding:2px 8px;font-weight:600">本月</span>`:''}
-      </div>
-      <div class="g2" style="margin-bottom:10px">
-        <div style="background:var(--greenLt);border-radius:10px;padding:10px 12px">
-          <div style="font-size:9px;color:var(--mid);margin-bottom:2px">個人支出</div>
-          <div style="font-size:16px;font-weight:800;color:var(--green)">${fmt(pA.total)}</div>
-          <div style="font-size:9px;color:${pA.total>PERSONAL_BUDGET?'var(--danger)':'var(--dim)'};margin-top:2px">${pA.total>PERSONAL_BUDGET?`超出 ${fmt(pA.total-PERSONAL_BUDGET)}`:`預算內 ${fmt(PERSONAL_BUDGET-pA.total)}`}</div>
-        </div>
-        <div style="background:var(--goldLt);border-radius:10px;padding:10px 12px">
-          <div style="font-size:9px;color:var(--mid);margin-bottom:2px">共同支出</div>
-          <div style="font-size:16px;font-weight:800;color:var(--gold)">${fmt(jA.total)}</div>
-          <div style="font-size:9px;color:${jA.total>JOINT_BUDGET?'var(--danger)':'var(--dim)'};margin-top:2px">${jA.total>JOINT_BUDGET?`超出 ${fmt(jA.total-JOINT_BUDGET)}`:`預算內 ${fmt(JOINT_BUDGET-jA.total)}`}</div>
-        </div>
-      </div>
-      ${pA.total>0?`<div style="margin-bottom:10px">${catBarsHTML(pA.bycat,pMax,'👤 個人消費分類','var(--green)')}</div>`:''}
-      ${jA.total>0?`<div style="margin-bottom:10px">${catBarsHTML(jA.bycat,jMax,'👫 共同消費分類','var(--gold)')}</div>`:''}
-      ${overHTML}${tipHTML}
-    </div>`;
-  });
-
-  // 待結清
-  const settleMsg=diff>0?`→ 葉 應匯三 ${fmt(Math.abs(diff)/2)}`:diff<0?`→ 三 應匯葉 ${fmt(Math.abs(diff)/2)}`:'✓ 目前平帳';
-  const sc=diff!==0?'var(--danger)':'var(--green)';
-  const sb=diff!==0?'var(--dangerLt)':'var(--greenLt)';
-  const settleHTML=`<div class="card" style="border-color:var(--gold)">
-    <div class="card-title">⚖️ 墊付結算</div>
-    <div class="settle-row"><span style="color:var(--mid)">三 已墊</span><span style="font-weight:700;color:var(--green)">${fmt(sanPaid)}</span></div>
-    <div class="settle-row" style="margin-bottom:10px"><span style="color:var(--mid)">葉 已墊</span><span style="font-weight:700;color:var(--gold)">${fmt(yePaid)}</span></div>
-    <div style="padding:10px 12px;background:${sb};border-radius:8px;font-size:12px;font-weight:600;color:${sc};margin-bottom:12px">${settleMsg}</div>
-    <button class="btn-primary" onclick="settle()">✓ 本月結清</button>
-  </div>`;
-
-  const contentMap={'流水':flowHTML,'圖表':chartHTML,'待結清':settleHTML};
-  el.innerHTML=subTabsHTML+`<div>${contentMap[ledgerSubTab]}</div>`;
-}
-
-function setLedgerTab(t){ledgerSubTab=t;renderLedger();}
-
-function toggleMonth(id){
-  const body=document.getElementById(id);
-  const chev=document.getElementById('chev-'+id);
-  if(!body)return;
-  body.classList.toggle('open');
-  if(chev)chev.classList.toggle('open');
-}
-
-function settle(){
-  if(!confirm('確認本月結清？'))return;
-  joint=joint.map(e=>({...e,paid:'共同'}));
-  saveAll();renderAll();
-}
-
-// ── EXPORT REPORT ──
-function exportReport(){
-  const now=new Date();
-  const days=['日','一','二','三','四','五','六'];
-  const dateStr=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 星期${days[now.getDay()]}`;
-  const months=getAllMonths();
-  let txt=`╔══════════════════════════════╗\n`;
-  txt+=`║      錢錢相印 財務報表       ║\n`;
-  txt+=`╚══════════════════════════════╝\n`;
-  txt+=`小花花 & 小貝貝\n`;
-  txt+=`產出時間：${dateStr}\n\n`;
-
+  let chartHtml='';
   months.forEach(m=>{
     const pE=personal.filter(e=>e.date.startsWith(m)&&!e.cash);
     const jE=joint.filter(e=>e.date.startsWith(m));
     const pTotal=pE.reduce((s,e)=>s+e.amt,0);
     const jTotal=jE.reduce((s,e)=>s+e.amt,0);
-    txt+=`━━━━━━━━━━━━━━━━━━━━━━━\n`;
-    txt+=`📅 ${ymLabel(m)}\n`;
-    txt+=`━━━━━━━━━━━━━━━━━━━━━━━\n`;
-    txt+=`個人支出：${fmt(pTotal)}`;
-    txt+=pTotal>PERSONAL_BUDGET?` ⚠️ 超出 ${fmt(pTotal-PERSONAL_BUDGET)}\n`:` ✓ 預算內\n`;
-    txt+=`共同支出：${fmt(jTotal)}`;
-    txt+=jTotal>JOINT_BUDGET?` ⚠️ 超出 ${fmt(jTotal-JOINT_BUDGET)}\n`:` ✓ 預算內\n`;
-    txt+=`合計：${fmt(pTotal+jTotal)}\n\n`;
-
-    // personal breakdown
-    if(pE.length>0){
-      txt+=`【個人明細】\n`;
-      const bycat={};
-      CATS.forEach(c=>{const v=pE.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0);if(v>0)bycat[c]=v;});
-      Object.entries(bycat).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{
-        txt+=`  ${catShort(c).padEnd(8)}${fmt(v)}\n`;
-      });
-      txt+=`\n`;
+    const isCur=m===ym;
+    // cat breakdown
+    const pBycat={},jBycat={};
+    CATS.forEach(c=>{
+      pBycat[c]=pE.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0);
+      jBycat[c]=jE.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0);
+    });
+    const pMax=Math.max(...Object.values(pBycat),1);
+    const jMax=Math.max(...Object.values(jBycat),1);
+    function catBars(bycat,maxV,color){
+      return Object.entries(bycat).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([cat,val])=>`
+        <div style="margin-bottom:6px">
+          <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px">
+            <span>${cat.replace(/^[^ ]+ /,'')}</span><span style="font-weight:600">${fmt(val)}</span>
+          </div>
+          ${barHTML(val/maxV*100,color,5)}
+        </div>`).join('');
     }
-    // joint breakdown
-    if(jE.length>0){
-      txt+=`【共同明細】\n`;
-      const bycat={};
-      CATS.forEach(c=>{const v=jE.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0);if(v>0)bycat[c]=v;});
-      Object.entries(bycat).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{
-        txt+=`  ${catShort(c).padEnd(8)}${fmt(v)}\n`;
-      });
-      txt+=`\n`;
-    }
+    // over-limit check
+    const overP=Object.entries(P_LIMITS).filter(([c,l])=>pBycat[c]>l).sort((a,b)=>(pBycat[b[0]]-b[1])-(pBycat[a[0]]-a[1]));
+    const overJ=Object.entries(J_LIMITS).filter(([c,l])=>jBycat[c]>l).sort((a,b)=>(jBycat[b[0]]-b[1])-(jBycat[a[0]]-a[1]));
+    const overHtml=(overP.length||overJ.length)?`<div style="background:var(--dangerLt);border-radius:8px;padding:9px 11px;margin-bottom:8px">
+      <div style="font-size:11px;font-weight:700;color:var(--danger);margin-bottom:4px">⚠️ 超支</div>
+      ${overP.slice(0,2).map(([c,l])=>`<div style="font-size:10px;color:var(--danger)">個人 ${c.replace(/^[^ ]+ /,'')}：超出 ${fmt(pBycat[c]-l)}</div>`).join('')}
+      ${overJ.slice(0,2).map(([c,l])=>`<div style="font-size:10px;color:var(--danger)">共同 ${c.replace(/^[^ ]+ /,'')}：超出 ${fmt(jBycat[c]-l)}</div>`).join('')}
+    </div>`:'';
+    const tipTop=overP[0]?`個人「${overP[0][0].replace(/^[^ ]+ /,'')}」需控制`:pTotal>0?'個人支出良好 ✓':'';
+    const tipBot=overJ[0]?`共同「${overJ[0][0].replace(/^[^ ]+ /,'')}」需注意`:jTotal>0?'共同支出良好 ✓':'';
+    chartHtml+=`<div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-size:13px;font-weight:700">${ymLabel(m)}</div>
+        ${isCur?`<span style="font-size:10px;background:var(--greenLt);color:var(--green);border-radius:20px;padding:2px 8px;font-weight:600">本月</span>`:''}
+      </div>
+      <div class="g2" style="margin-bottom:10px">
+        <div style="background:var(--greenLt);border-radius:10px;padding:10px 12px">
+          <div style="font-size:9px;color:var(--mid);margin-bottom:2px">個人</div>
+          <div style="font-size:16px;font-weight:800;color:var(--green)">${fmt(pTotal)}</div>
+          <div style="font-size:9px;margin-top:2px;color:${pTotal>PERSONAL_BUDGET?'var(--danger)':'var(--dim)'}">${pTotal>PERSONAL_BUDGET?`超出 ${fmt(pTotal-PERSONAL_BUDGET)}`:'預算內'}</div>
+        </div>
+        <div style="background:var(--goldLt);border-radius:10px;padding:10px 12px">
+          <div style="font-size:9px;color:var(--mid);margin-bottom:2px">共同</div>
+          <div style="font-size:16px;font-weight:800;color:var(--gold)">${fmt(jTotal)}</div>
+          <div style="font-size:9px;color:${jTotal>JOINT_BUDGET?'var(--danger)':'var(--dim)'};margin-top:2px">${jTotal>JOINT_BUDGET?`超出 ${fmt(jTotal-JOINT_BUDGET)}`:`預算內`}</div>
+        </div>
+      </div>
+      ${pTotal>0?`<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:600;color:var(--green);margin-bottom:6px">👤 個人消費</div>${catBars(pBycat,pMax,'var(--green)')}</div>`:''}
+      ${jTotal>0?`<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:600;color:var(--gold);margin-bottom:6px">👫 共同消費</div>${catBars(jBycat,jMax,'var(--gold)')}</div>`:''}
+      ${overHtml}
+      ${tipTop||tipBot?`<div style="background:var(--blueLt);border-radius:8px;padding:9px 11px">
+        <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:3px">💡 建議</div>
+        ${tipTop?`<div style="font-size:10px;color:var(--blue)">${tipTop}</div>`:''}
+        ${tipBot?`<div style="font-size:10px;color:var(--blue);margin-top:2px">${tipBot}</div>`:''}
+      </div>`:''}
+    </div>`;
   });
 
-  // 投資概況
-  txt+=`━━━━━━━━━━━━━━━━━━━━━━━\n`;
-  txt+=`📈 投資概況\n`;
-  txt+=`━━━━━━━━━━━━━━━━━━━━━━━\n`;
-  const p006=parseFloat(invest.price006208)||0;
-  const p631=parseFloat(invest.price00631)||0;
-  const mv006=invest.shares006208*p006;
-  const mv631=invest.shares00631*p631;
-  txt+=`006208 旅遊桶市值：${mv006>0?fmt(mv006):'尚未建倉'}\n`;
-  txt+=`00631L 核心桶市值：${mv631>0?fmt(mv631):'尚未建倉'}\n`;
-  txt+=`💰 銀彈桶現金：${fmt(invest.bullet||0)}\n`;
-  txt+=`投資總規模：${fmt(mv006+mv631+(invest.bullet||0))}\n\n`;
-  txt+=`══════════════════════════════\n`;
-  txt+=`兩個人的錢，比一個人走得更遠\n`;
-  txt+=`══════════════════════════════\n`;
+  // 墊付: 按月份顯示，三墊/葉墊清單，不計算誰匯誰
+  let settleHtml='';
+  if(settleData.length===0){settleHtml=emptyHTML('尚無墊付記錄');}
+  else{
+    settleData.forEach(({m,entries,sanAmt,yeAmt,pubAmt,total})=>{
+      const isCur=m===ym;
+      const mid2='settle'+m.replace('-','');
+      const sanItems=entries.filter(e=>e.payer==='三墊');
+      const yeItems=entries.filter(e=>e.payer==='葉墊');
+      settleHtml+=`<div class="month-section">
+        <div class="month-header" onclick="toggleMonth('${mid2}')">
+          <div>
+            <div class="month-title">${monthName(m)} 墊付${isCur?' (本月)':''}</div>
+            <div class="month-summary" style="display:flex;gap:10px">
+              ${sanAmt>0?`<span style="color:var(--p-color)">三墊 ${fmt(sanAmt)}</span>`:''}
+              ${yeAmt>0?`<span style="color:var(--j-color)">葉墊 ${fmt(yeAmt)}</span>`:''}
+              ${pubAmt>0?`<span style="color:var(--mid)">公費 ${fmt(pubAmt)}</span>`:''}
+            </div>
+          </div>
+          <span class="month-chevron${isCur?' open':''}" id="chev-${mid2}">▼</span>
+        </div>
+        <div class="month-body${isCur?' open':''}" id="${mid2}">
+          ${sanAmt>0?`
+            <div style="font-size:11px;font-weight:700;color:var(--p-color);margin:8px 0 4px">三墊 → 公費匯回 ${fmt(sanAmt)}</div>
+            ${sanItems.map(e=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px">
+              <span style="color:var(--mid)">${e.date.slice(5)} ${e.desc}</span>
+              <span style="font-weight:600;color:var(--p-color)">-${fmt(e.amt)}</span>
+            </div>`).join('')}`:''}
+          ${yeAmt>0?`
+            <div style="font-size:11px;font-weight:700;color:var(--j-color);margin:8px 0 4px">葉墊 → 公費匯回 ${fmt(yeAmt)}</div>
+            ${yeItems.map(e=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px">
+              <span style="color:var(--mid)">${e.date.slice(5)} ${e.desc}</span>
+              <span style="font-weight:600;color:var(--j-color)">-${fmt(e.amt)}</span>
+            </div>`).join('')}`:''}
+          ${pubAmt>0?`<div style="font-size:10px;color:var(--dim);margin-top:6px">公費支出 ${fmt(pubAmt)} 已從共同帳戶直接支付</div>`:''}
+        </div>
+      </div>`;
+    });
+  }
 
-  // copy to clipboard
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(txt).then(()=>{
-      alert('✅ 報表已複製！\n\n可以貼到 LINE、備忘錄或 Notes 保存');
-    }).catch(()=>fallbackCopy(txt));
-  } else { fallbackCopy(txt); }
+  // Report button
+  const reportBtnHtml=`<div style="margin-bottom:10px">
+    <div style="font-size:11px;font-weight:600;color:var(--mid);margin-bottom:6px">產出報表</div>
+    <select class="inp" id="reportMonthSel" style="margin-bottom:8px">
+      ${months.map(m=>`<option value="${m}">${ymLabel(m)}</option>`).join('')}
+    </select>
+    <button class="btn-primary" onclick="openReport()">📋 產出本月報表</button>
+  </div>`;
+
+  const contentMap={'流水':legendHtml+reportBtnHtml+flowHtml,'圖表':chartHtml,'墊付':settleHtml};
+  el.innerHTML=subHtml+`<div>${contentMap[ledgerTab]}</div>`;
 }
 
-function fallbackCopy(txt){
-  const ta=document.createElement('textarea');
-  ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
-  document.body.appendChild(ta); ta.select();
-  try{document.execCommand('copy');alert('✅ 報表已複製！\n\n可以貼到 LINE、備忘錄或 Notes 保存');}
-  catch{alert('請長按以下文字手動複製：\n\n'+txt.slice(0,300)+'...');}
-  document.body.removeChild(ta);
+function setLedgerTab(t){ledgerTab=t;renderLedger();}
+function toggleMonth(id){
+  const body=document.getElementById(id);
+  const chev=document.getElementById('chev-'+id);
+  if(body)body.classList.toggle('open');
+  if(chev)chev.classList.toggle('open');
 }
 
-// ── RENDER BUDGET ──
+// ── Report ────────────────────────────────────────────────────
+function openReport(){
+  const sel=document.getElementById('reportMonthSel');
+  const m=sel?sel.value:ymNow();
+  const pE=personal.filter(e=>e.date.startsWith(m)&&!e.cash).sort((a,b)=>a.date.localeCompare(b.date));
+  const jE=joint.filter(e=>e.date.startsWith(m)).sort((a,b)=>a.date.localeCompare(b.date));
+  const pTotal=pE.reduce((s,e)=>s+e.amt,0);
+  const jTotal=jE.reduce((s,e)=>s+e.amt,0);
+  const sanAmt=jE.filter(e=>e.payer==='三墊').reduce((s,e)=>s+e.amt,0);
+  const yeAmt=jE.filter(e=>e.payer==='葉墊').reduce((s,e)=>s+e.amt,0);
+
+  const pBycat={};CATS.forEach(c=>{const v=pE.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0);if(v)pBycat[c]=v;});
+  const jBycat={};CATS.forEach(c=>{const v=jE.filter(e=>e.cat===c).reduce((s,e)=>s+e.amt,0);if(v)jBycat[c]=v;});
+
+  const now=new Date();
+  const dateStr=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+
+  let html=`<div style="font-size:11px;line-height:1.9">
+    <div style="font-size:13px;font-weight:800;margin-bottom:8px">📅 ${ymLabel(m)} 月度報表</div>
+    <div style="color:var(--dim);font-size:10px;margin-bottom:14px">產出時間：${dateStr}</div>
+
+    <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">👤 個人報表 — ${fmt(pTotal)}</div>
+    <div class="g2" style="margin-bottom:10px">
+      ${Object.entries(pBycat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div style="display:flex;justify-content:space-between;font-size:10px;padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--mid)">${c.replace(/^[^ ]+ /,'')}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')}
+    </div>
+    <div style="font-size:10px;font-weight:600;color:var(--mid);margin-bottom:6px">個人流水明細</div>
+    ${pE.map(e=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-size:10px">
+      <span style="color:var(--mid)">${e.date.slice(5)} ${e.desc}</span>
+      <span style="font-weight:600;color:var(--p-color)">-${fmt(e.amt)}</span>
+    </div>`).join('')||'<div style="color:var(--dim);font-size:10px">無記錄</div>'}
+
+    <div style="font-size:12px;font-weight:700;color:var(--gold);margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)">👫 共同報表 — ${fmt(jTotal)}</div>
+    <div class="g2" style="margin-bottom:10px">
+      ${Object.entries(jBycat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div style="display:flex;justify-content:space-between;font-size:10px;padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--mid)">${c.replace(/^[^ ]+ /,'')}</span><span style="font-weight:600">${fmt(v)}</span></div>`).join('')}
+    </div>
+    <div style="font-size:10px;font-weight:600;color:var(--mid);margin-bottom:6px">共同流水明細</div>
+    ${jE.map(e=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-size:10px">
+      <span style="color:var(--mid)">${e.date.slice(5)} ${e.desc} ${payerBadge(e.payer)}</span>
+      <span style="font-weight:600;color:var(--j-color)">-${fmt(e.amt)}</span>
+    </div>`).join('')||'<div style="color:var(--dim);font-size:10px">無記錄</div>'}
+
+    ${sanAmt>0||yeAmt>0?`<div style="background:var(--goldLt);border-radius:8px;padding:10px;margin-top:12px">
+      <div style="font-size:11px;font-weight:700;margin-bottom:6px">⚖️ 墊付待結清</div>
+      ${sanAmt>0?`<div style="font-size:10px">三墊 待公費匯回：<b>${fmt(sanAmt)}</b></div>`:''}
+      ${yeAmt>0?`<div style="font-size:10px">葉墊 待公費匯回：<b>${fmt(yeAmt)}</b></div>`:''}
+    </div>`:''}
+  </div>`;
+
+  document.getElementById('reportContent').innerHTML=html;
+  // Store text version for copy
+  window._reportText=`錢錢經理人 ${ymLabel(m)} 月度報表\n產出時間：${dateStr}\n\n【個人】總計 ${fmt(pTotal)}\n${pE.map(e=>`${e.date.slice(5)} ${e.desc} -${fmt(e.amt)}`).join('\n')}\n\n【共同】總計 ${fmt(jTotal)}\n${jE.map(e=>`${e.date.slice(5)} ${e.desc}(${e.payer}) -${fmt(e.amt)}`).join('\n')}${sanAmt>0||yeAmt>0?`\n\n【墊付】${sanAmt>0?`三墊待匯回 ${fmt(sanAmt)} `:''}${yeAmt>0?`葉墊待匯回 ${fmt(yeAmt)}`:''}`:''}`;
+  document.getElementById('reportModal').classList.add('open');
+}
+function closeReport(){document.getElementById('reportModal').classList.remove('open');}
+function copyReport(){
+  const txt=window._reportText||'';
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>alert('✅ 已複製'));}
+  else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('✅ 已複製');}
+}
+
+// ── RENDER BUDGET ─────────────────────────────────────────────
 function renderBudget(){
   const el=document.getElementById('page-budget');
   const spent=getSpentInPeriod();
   const rem=Math.max(0,PERSONAL_BUDGET-spent);
   const pct=Math.round(spent/PERSONAL_BUDGET*100);
   const c=pct>80?'var(--danger)':'var(--green)';
-  const now=new Date();
   el.innerHTML=`
     <div class="card">
       <div class="card-title">👤 個人預算 NT$8,000</div>
       ${barHTML(pct,c,10)}
       <div style="display:flex;justify-content:space-between;margin-top:8px">
-        <span style="font-size:11px;color:var(--dim)">已用 ${fmt(spent)}</span>
+        <span class="tip">已用 ${fmt(spent)}</span>
         <span style="font-size:11px;font-weight:700;color:${c}">剩 ${fmt(rem)}</span>
       </div>
-      <div class="tip" style="margin-top:4px">每月15號重置，上月盈餘轉入銀彈桶</div>
+      <div class="tip" style="margin-top:4px">每月1號重置</div>
     </div>
     <div class="card">
       <div class="card-title">💰 共同公積金分配</div>
@@ -749,114 +839,108 @@ function renderBudget(){
       </div>`).join('')}
     </div>
     <div class="card">
-      <div class="card-title">📋 操作說明 & 報表備份</div>
-      <div style="font-size:12px;color:var(--mid);line-height:1.9;margin-bottom:14px">
-        <div style="font-weight:700;color:var(--text);margin-bottom:6px">📅 每日</div>
-        <div>• 花錢當下馬上記帳，說明欄直接打文字</div>
-        <div>• 領現金時勾「僅領現金」，不計入支出</div>
-        <div style="font-weight:700;color:var(--text);margin:10px 0 6px">📅 每月1號</div>
-        <div>• 帳務 → 待結清 → 確認墊付差額 → 結清</div>
-        <div>• 把上月個人盈餘手動轉入銀彈桶</div>
-        <div style="font-weight:700;color:var(--text);margin:10px 0 6px">📅 每月15號</div>
-        <div>• 各自轉入 NT$10,000 進共同帳戶</div>
-        <div>• 個人預算自動重置為 NT$8,000</div>
-        <div style="font-weight:700;color:var(--text);margin:10px 0 6px">📅 每季</div>
-        <div>• 檢視投資報酬，評估是否再平衡</div>
-        <div>• 按下方「複製報表」存一份備份</div>
-        <div style="font-weight:700;color:var(--text);margin:10px 0 6px">📅 每年1月</div>
-        <div>• 年度財務總檢視，調整策略與配比</div>
+      <div class="card-title">📋 操作說明</div>
+      <div style="font-size:12px;color:var(--mid);line-height:1.9;margin-bottom:12px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:4px">每日</div>
+        <div>· 花錢當下馬上記帳</div>
+        <div>· 共同帳款選好「三墊/葉墊/公費」</div>
+        <div>· 領現金勾「僅領現金」</div>
+        <div style="font-weight:700;color:var(--text);margin:8px 0 4px">每月1號</div>
+        <div>· 個人預算重置 NT$8,000</div>
+        <div>· 各自轉入 NT$10,000 公費</div>
+        <div style="font-weight:700;color:var(--text);margin:8px 0 4px">每月底</div>
+        <div>· 帳務 → 墊付 → 公費各別匯回三/葉</div>
+        <div>· 帳務 → 流水 → 產出月報表存底</div>
       </div>
-      <div style="background:var(--blueLt);border-radius:10px;padding:12px;margin-bottom:12px">
-        <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:4px">💡 報表備份說明</div>
-        <div style="font-size:11px;color:var(--blue);line-height:1.8">
-          點「複製報表」後，文字會自動複製到剪貼簿。<br/>
-          可以貼到：LINE 給對方 / Apple Notes / Google Keep / 任何備忘錄 App。<br/>
-          建議每月結清當天複製一次，長期保留紀錄。
-        </div>
-      </div>
-      <button class="btn-primary" onclick="exportReport()" style="background:var(--blue)">
-        📋 複製本月報表到剪貼簿
-      </button>
     </div>`;
 }
 
-// ── RENDER INVEST ──
+// ── RENDER INVEST ─────────────────────────────────────────────
 function renderInvest(){
   const el=document.getElementById('page-invest');
-  const p006=parseFloat(invest.price006208)||0;
-  const p631=parseFloat(invest.price00631)||0;
-  const c006=parseFloat(invest.cost006208)||0;
-  const c631=parseFloat(invest.cost00631)||0;
-  const mv006=invest.shares006208*p006;
-  const mv631=invest.shares00631*p631;
-  const pnl006=mv006-invest.shares006208*c006;
-  const pnl631=mv631-invest.shares00631*c631;
-  const pp006=c006>0&&invest.shares006208>0?Math.round(pnl006/(invest.shares006208*c006)*100):0;
-  const pp631=c631>0&&invest.shares00631>0?Math.round(pnl631/(invest.shares00631*c631)*100):0;
-  const totalMV=mv006+mv631+(invest.bullet||0);
+  const mv631=parseFloat(invest.mv631)||0;
+  const mv662=parseFloat(invest.mv662)||0;
+  const mv865=parseFloat(invest.mv865)||0;
+  const cash=parseFloat(invest.cash)||0;
+  const totalInv=mv631+mv662+mv865;
+  const totalAll=totalInv+cash;
 
-  function invField(key,label,isNum=false){
-    return `<div class="form-group"><div class="form-label">${label}</div><input class="inp" type="number" placeholder="0" inputmode="numeric" value="${invest[key]||''}" onchange="updInv('${key}',${isNum}?Number(this.value):this.value)"/></div>`;
-  }
-  function pnlHTML(pnl,pp){
-    if(!p006&&!p631)return '<span style="color:var(--dim)">—</span>';
-    const col=pnl>=0?'var(--green)':'var(--danger)';
-    return `<span style="color:${col};font-weight:700">${pnl>=0?'+':''}${fmt(pnl)} (${pp}%)</span>`;
+  // Triangle ratio 5:4:2
+  const totalRatio=5+4+2;
+  const tri=[
+    {code:'00631L',name:'元大台灣50正2',ratio:5,color:'var(--green)',border:'#8BC4A0',bg:'#EAF5EE',key:'mv631',mv:mv631,target:totalInv>0?totalInv*(5/totalRatio):0},
+    {code:'00662',name:'富邦NASDAQ',ratio:4,color:'var(--blue)',border:'#90A8E0',bg:'#EEF3FF',key:'mv662',mv:mv662,target:totalInv>0?totalInv*(4/totalRatio):0},
+    {code:'00865B',name:'中信投等債',ratio:2,color:'var(--coffee)',border:'#C0A080',bg:'#F5EFE6',key:'mv865',mv:mv865,target:totalInv>0?totalInv*(2/totalRatio):0},
+  ];
+
+  function invField(key,label){
+    return `<div class="form-group"><div class="form-label" style="font-size:10px;color:var(--mid);margin-bottom:3px">${label}</div>
+    <input class="inp tri-inp" type="number" placeholder="0" inputmode="numeric" value="${invest[key]||''}" style="text-align:left" onchange="updInv('${key}',this.value)"/></div>`;
   }
 
   el.innerHTML=`
     <div class="card">
-      <div class="card-title">📋 投資策略</div>
-      ${[['00631L 核心桶','每月 NT$3,500 · 曝險100%','var(--green)'],['💰 銀彈桶','每月 NT$3,000 · 等時機加碼','var(--gold)'],['006208 旅遊桶','每月 NT$4,000 · 現金存著不動','var(--coffee)']].map(([l,d,c])=>`
-      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px">
-        <span style="font-weight:600;color:${c}">${l}</span>
-        <span style="color:var(--mid);font-size:11px">${d}</span>
-      </div>`).join('')}
+      <div class="card-title">📐 金三角投資策略</div>
+      <div class="tri-grid">
+        ${tri.map(t=>`<div class="tri-card" style="background:${t.bg};border-color:${t.border}">
+          <div class="tri-code" style="color:${t.color}">${t.code}</div>
+          <div class="tri-name">${t.name}</div>
+          <div class="tri-ratio" style="color:${t.color}">${t.ratio}</div>
+          <div style="font-size:9px;color:var(--mid)">${Math.round(t.ratio/totalRatio*100)}%</div>
+        </div>`).join('')}
+      </div>
+      <div style="font-size:10px;color:var(--mid);text-align:center;margin-top:4px">比例 5 : 4 : 2</div>
     </div>
+
     <div class="card">
-      <div class="card-title">📡 今日股價 & 成本</div>
+      <div class="card-title">💰 市值填入</div>
       <div class="form-row" style="grid-template-columns:1fr 1fr">
-        ${invField('price006208','006208 今日股價')}
-        ${invField('price00631','00631L 今日股價')}
-        ${invField('cost006208','006208 買入成本')}
-        ${invField('cost00631','00631L 買入成本')}
+        ${tri.map(t=>invField(t.key,`${t.code} 市值`)).join('')}
+        ${invField('cash','💰 銀彈現金')}
       </div>
-      <div class="form-row" style="grid-template-columns:1fr 1fr">
-        ${invField('shares006208','006208 持有股數',true)}
-        ${invField('shares00631','00631L 持有股數',true)}
+
+      <div style="margin-top:10px;padding:12px;background:var(--greenLt);border-radius:10px">
+        <div style="font-size:10px;color:var(--mid);margin-bottom:4px">投資總市值</div>
+        <div style="font-size:24px;font-weight:900;color:var(--green)">${totalAll>0?fmt(totalAll):'—'}</div>
+        ${totalInv>0?`<div class="tip" style="margin-top:4px">投資 ${fmt(totalInv)} ＋ 銀彈 ${fmt(cash)}</div>`:''}
       </div>
     </div>
-    <div class="card">
-      <div class="card-title">📦 持倉損益</div>
-      <div class="inv-row"><div><div class="inv-label">✈️ 006208 旅遊桶</div><div class="inv-sub">市值</div></div><div class="inv-val"><div class="inv-mv">${p006>0?fmt(mv006):'—'}</div><div class="inv-pnl">${p006>0?pnlHTML(pnl006,pp006):'—'}</div></div></div>
-      <div class="inv-row"><div><div class="inv-label">📈 00631L 核心桶</div><div class="inv-sub">市值</div></div><div class="inv-val"><div class="inv-mv">${p631>0?fmt(mv631):'—'}</div><div class="inv-pnl">${p631>0?pnlHTML(pnl631,pp631):'—'}</div></div></div>
-      <div style="margin-top:10px">
-        <div class="form-label">💰 銀彈桶現金</div>
-        <input class="inp" type="number" placeholder="累計金額" inputmode="numeric" value="${invest.bullet||''}" onchange="updInv('bullet',Number(this.value))"/>
-      </div>
-      <div style="margin-top:10px;padding:10px 12px;background:var(--greenLt);border-radius:10px">
-        <div style="font-size:10px;color:var(--mid)">投資總規模</div>
-        <div style="font-size:20px;font-weight:800;color:var(--green);margin-top:2px">${totalMV>0?fmt(totalMV):'—'}</div>
-      </div>
-    </div>
+
+    ${totalInv>0?`<div class="card">
+      <div class="card-title">⚖️ 目前配置 vs 目標</div>
+      ${tri.map(t=>{
+        const actual=totalInv>0?t.mv/totalInv*100:0;
+        const target=t.ratio/totalRatio*100;
+        const diff=actual-target;
+        const diffColor=Math.abs(diff)>5?'var(--danger)':Math.abs(diff)>2?'var(--gold)':'var(--green)';
+        return `<div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px">
+            <span style="font-weight:600;color:${t.color}">${t.code}</span>
+            <span style="color:${diffColor};font-size:10px">${actual.toFixed(1)}% / 目標${target.toFixed(0)}% (${diff>=0?'+':''}${diff.toFixed(1)}%)</span>
+          </div>
+          ${barHTML(actual,t.color,7)}
+        </div>`;}).join('')}
+    </div>`:''}
+
     <div class="card">
       <div class="card-title">🔄 再平衡規則</div>
-      ${[['獲利 > 65%','賣出轉旅遊現金','var(--green)'],['虧損 < 35%','銀彈加碼攤平','var(--gold)'],['旅遊桶報酬 > 10%','撥 50% 獲利','var(--green)'],['旅遊桶報酬 5～10%','撥 30% 獲利','var(--coffee)'],['旅遊桶虧損','不動等回本','var(--danger)']].map(([c,a,col])=>`
-      <div class="rb-row"><span style="color:var(--mid)">${c}</span><span style="font-weight:600;color:${col}">${a}</span></div>`).join('')}
+      ${[
+        ['00631L獲利>65%','賣出部分轉旅遊現金','var(--green)'],
+        ['00631L虧損<35%','銀彈加碼攤平','var(--gold)'],
+        ['旅遊桶報酬>10%','撥50%獲利出來','var(--green)'],
+        ['旅遊桶報酬5~10%','撥30%獲利出來','var(--coffee)'],
+        ['旅遊桶虧損','不動等回本','var(--danger)'],
+        ['任一標的偏離>5%','考慮再平衡','var(--blue)'],
+      ].map(([c,a,col])=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:11px">
+        <span style="color:var(--mid)">${c}</span>
+        <span style="font-weight:600;color:${col}">${a}</span>
+      </div>`).join('')}
     </div>`;
 }
 
-function updInv(k,v){invest[k]=v;saveAll();renderInvest();}
+function updInv(k,v){invest[k]=parseFloat(v)||0;saveAll();renderInvest();}
 
-// ── Header date ──
-function updateHdrDate(){
-  const now=new Date();
-  const days=['日','一','二','三','四','五','六'];
-  const y=now.getFullYear(),m=now.getMonth()+1,d=now.getDate(),w=days[now.getDay()];
-  document.getElementById('hdrSub').textContent=`${y}年${m}月${d}日 星期${w} · 小花花 & 小貝貝`;
-}
-
-// ── Run ──
+// ── Run ───────────────────────────────────────────────────────
 init();
 </script>
 </body>
